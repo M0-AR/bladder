@@ -91,11 +91,11 @@ from xml.dom import minidom
 def create_xml_annotation(filename, width, height, depth, label, coords):
     root = Element('annotation')
     folder = SubElement(root, 'folder')
-    folder.text = "dataset"
+    folder.text = "images"
     fname = SubElement(root, 'filename')
     fname.text = filename
     path = SubElement(root, 'path')
-    path.text = os.path.join("dataset", filename)
+    path.text = os.path.join("images", filename)
     source = SubElement(root, 'source')
     database = SubElement(source, 'database')
     database.text = "Custom Dataset"
@@ -113,7 +113,8 @@ def create_xml_annotation(filename, width, height, depth, label, coords):
 
     obj = SubElement(root, 'object')
     name = SubElement(obj, 'name')
-    name.text = label
+    # name.text = label
+    name.text = "Suspected_Regain"
 
     pose = SubElement(obj, 'pose')
     pose.text = "Unspecified"
@@ -139,7 +140,7 @@ if __name__ == "__main__":
     base_path = "E:/Mohamad/"
     frame_rate = 5
 
-    dataset_path = "dataset"
+    dataset_path = "images"
     if not os.path.exists(dataset_path):
         os.makedirs(dataset_path)
 
