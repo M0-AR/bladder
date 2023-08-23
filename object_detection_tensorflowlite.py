@@ -83,7 +83,7 @@ def main():
     GRAPH_NAME = 'detect.tflite'
     LABELMAP_NAME = 'labelmap.txt'
     VIDEO_NAME = 'C:/Users/md/Desktop/a.mp4'
-    MIN_CONF_THRESHOLD = 0.1
+    MIN_CONF_THRESHOLD = 0.1 # TODO:
 
     # Paths
     CWD_PATH = os.getcwd()
@@ -111,6 +111,9 @@ def main():
     else:  # TF1 model
         boxes_idx, classes_idx, scores_idx = 0, 1, 2
 
+    MAX_FRAMES_TO_KEEP = 0  # Keep detections alive for 5 frames # TODO:
+    recent_detections = []  # This will hold our recent detections
+
     video = cv2.VideoCapture(VIDEO_PATH)
     imW = video.get(cv2.CAP_PROP_FRAME_WIDTH)
     imH = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -130,11 +133,19 @@ def main():
         classes = interpreter.get_tensor(output_details[classes_idx]['index'])[0]
         scores = interpreter.get_tensor(output_details[scores_idx]['index'])[0]
 
-        # Draw bounding boxes and labels on the frame
-        frame = draw_detections(frame, boxes, classes, scores, labels, imW, imH, MIN_CONF_THRESHOLD)
+        # Add the current detections to the list of recent detections
+        recent_detections.append((boxes, classes, scores))
+
+        # Draw all recent detections
+        for detection in recent_detections:
+            frame = draw_detections(frame, *detection, labels, imW, imH, MIN_CONF_THRESHOLD)
+
+        # If the list of recent detections gets too long, pop the oldest detections off
+        if len(recent_detections) > MAX_FRAMES_TO_KEEP:
+            recent_detections.pop(0)
 
         cv2.imshow('Object detector', frame)
-        if cv2.waitKey(1) == ord('q'):
+        if cv2.waitKey(70) == ord('q'): # TODO:
             break
 
     video.release()
