@@ -1,3 +1,17 @@
+"""
+Thresholding using cv2.THRESH_BINARY:
+
+When you apply normal binary thresholding (cv2.THRESH_BINARY):
+
+Pixels with intensity values less than the threshold (in this case, 125) become black (0).
+Pixels with intensity values greater than or equal to the threshold (125) become white (255).
+So, considering the above:
+
+Brighter areas (intensities >= 125) in the original grayscale image will appear as white in the thresholded image.
+Darker areas (intensities < 125) will appear black. Thus, for normal binary thresholding, the regions of interest (
+ROIs) in the thresholded image are the white areas, since they represent the brighter regions in the original
+grayscale image.
+"""
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
