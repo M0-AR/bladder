@@ -66,7 +66,8 @@ def extract_frames(video_path: Path, annotations: dict, frame_rate: int = 1):
                     # print(f"Warning: Empty cropped frame at {timestamp} seconds.")
                     continue
 
-                frames.append((cropped_frame, label, timestamp))
+                # frames.append((cropped_frame, label, timestamp))
+                frames.append((frame, label, timestamp))
 
             # # If two timestamps and no xy coordinates
             # elif len(annotation_info["z"]) == 2:
