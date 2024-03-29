@@ -1,4 +1,6 @@
 import cv2
+
+
 def get_total_frames(video_path):
     """
     Returns the total number of frames in a video.
@@ -30,10 +32,9 @@ if __name__ == "__main__":
     video_path = 'C:/Users/md/Desktop/a.mp4'
     print(f"Total frames in the video: {get_total_frames(video_path)}")
 
-
-
 import cv2
 import numpy as np
+
 
 def compute_homography(src, dst):
     """
@@ -56,6 +57,7 @@ def compute_homography(src, dst):
 
     M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
     return M
+
 
 def stitch_images(video_path, frame_rate=30):
     cap = cv2.VideoCapture(video_path)
@@ -82,10 +84,11 @@ def stitch_images(video_path, frame_rate=30):
         if frame_count % frame_rate == 0:
             H = compute_homography(frame, stitched_image)
             h, w, _ = stitched_image.shape
-            stitched_image = cv2.warpPerspective(frame, H, (w*2, h))
+            stitched_image = cv2.warpPerspective(frame, H, (w * 2, h))
 
     cap.release()
     return stitched_image
+
 
 if __name__ == "__main__":
     video_path = 'C:/Users/md/Desktop/a.mp4'
