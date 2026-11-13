@@ -191,11 +191,13 @@ button{cursor:pointer}
 .hero-stage::after{inset:20%;border-style:solid;border-color:rgba(255,255,255,.06);animation-direction:reverse;animation-duration:64s}
 @keyframes spin{to{transform:rotate(360deg)}}
 #heroCanvas{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
-.no-three #gameCanvas{display:none}
-.no-three .game-canvas-wrap{background:radial-gradient(circle at 50% 42%,#5a2028,#210b11 60%,#070d10)}
+.no-three #gameCanvas,.no-game #gameCanvas{display:none}
+.no-three .game-canvas-wrap,.no-game .game-canvas-wrap{background:radial-gradient(circle at 50% 42%,#5a2028,#210b11 60%,#070d10)}
+.game-fallback-note{display:none;margin:0;padding:10px 16px;border-top:1px solid var(--line-light);background:rgba(94,234,212,.06);color:#c4d5da;font-size:.78rem;line-height:1.55}
+.no-three .game-fallback-note,.no-game .game-fallback-note{display:block}
 .hero-orb{display:none;position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 38% 32%,#ffb4a6,#c95d62 42%,#4b1b2b 70%,#13070d);box-shadow:inset -20px -30px 60px rgba(0,0,0,.6),0 0 80px rgba(255,125,107,.2)}
-.no-three #heroCanvas{display:none}
-.no-three .hero-orb{display:block}
+.no-three #heroCanvas,.no-hero #heroCanvas{display:none}
+.no-three .hero-orb,.no-hero .hero-orb{display:block}
 .chip{
   position:absolute;z-index:3;display:flex;align-items:center;gap:8px;background:rgba(7,25,34,.82);
   border:1px solid rgba(94,234,212,.22);border-radius:12px;padding:9px 12px;
@@ -773,6 +775,7 @@ details p a{text-decoration:underline;text-underline-offset:3px;color:var(--teal
             <button class="btn btn-sm btn-primary" id="nextRound">Next concept</button>
           </div>
         </div>
+        <p class="game-fallback-note" role="status">3D view unavailable in this browser. The mission still works: use the region buttons below. Descriptions are enabled.</p>
         <div class="game-clue">
           <small>Your clue</small>
           <p id="gameClueText">Press start to receive the first clue.</p>
@@ -1624,6 +1627,27 @@ try {
 } catch (error) {
   document.documentElement.classList.add("no-three");
 }
+function hasWebGL2() {
+  try {
+    const probe = document.createElement("canvas");
+    const gl = probe.getContext("webgl2");
+    if (!gl) return false;
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+function createRenderer(canvas) {
+  try {
+    return new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  } catch (error) {
+    console.warn(`3D renderer unavailable for #${canvas.id}; using the static fallback.`, error);
+    return null;
+  }
+}
+const webgl2 = Boolean(THREE) && hasWebGL2();
+if (!webgl2) document.documentElement.classList.add("no-three");
 const heroCanvas = $("#heroCanvas");
 const gameCanvas = $("#gameCanvas");
 const sceneState = { hero: null, game: null, brain: null };
@@ -1647,8 +1671,10 @@ function glowTexture() {
   ctx.fillRect(0, 0, 96, 96);
   return new THREE.CanvasTexture(canvas);
 }
-if (THREE && heroCanvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true, antialias: true });
+const heroRenderer = webgl2 && heroCanvas ? createRenderer(heroCanvas) : null;
+if (webgl2 && heroCanvas && !heroRenderer) document.documentElement.classList.add("no-hero");
+if (heroRenderer) {
+  const renderer = heroRenderer;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -1755,8 +1781,10 @@ if (THREE && heroCanvas) {
     renderer.render(scene, camera);
   };
 }
-if (THREE && gameCanvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas: gameCanvas, alpha: true, antialias: true });
+const gameRenderer = webgl2 && gameCanvas ? createRenderer(gameCanvas) : null;
+if (webgl2 && gameCanvas && !gameRenderer) document.documentElement.classList.add("no-game");
+if (gameRenderer) {
+  const renderer = gameRenderer;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x070d10, 0.026);
@@ -2037,6 +2065,10 @@ const gameState = {
   described: false,
   selected: false,
 };
+if (document.documentElement.classList.contains("no-three") || document.documentElement.classList.contains("no-game")) {
+  gameState.described = true;
+  $("#describeBtn").textContent = "Hide region descriptions";
+}
 const synth = window.speechSynthesis;
 const soundToggle = $("#soundToggle");
 if (!synth) {
