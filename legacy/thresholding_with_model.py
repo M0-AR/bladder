@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 from keras.models import load_model
+from matplotlib import pyplot as plt
+
 
 # Functions for image processing and display
 def display_image(img, title="Image"):

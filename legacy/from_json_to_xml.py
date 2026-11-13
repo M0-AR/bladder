@@ -1,8 +1,9 @@
-import cv2
-import os
-from pathlib import Path
 import glob
 import json
+import os
+from pathlib import Path
+
+import cv2
 
 
 def load_annotations(json_path: Path) -> dict:
@@ -82,9 +83,8 @@ def extract_frames(video_path: Path, annotations: dict, frame_rate: int = 1):
         cap.release()
     return frames
 
-from xml.etree.ElementTree import Element, SubElement, ElementTree, tostring
 from xml.dom import minidom
-
+from xml.etree.ElementTree import Element, ElementTree, SubElement, tostring
 
 # ... [Your previous functions] ...
 

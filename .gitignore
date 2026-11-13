@@ -1,0 +1,53 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test and lint caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Models and experiment outputs
+*.h5
+*.keras
+runs/
+outputs/
+checkpoints/
+
+# Local data (never commit patient data)
+data/
+datasets/
+saved_frames/
+bladder_data/
+dataset-jpg/
+frames-*/
+
+# Media
+*.mp4
+*.avi
+*.mov
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local tooling
+.playwright-mcp/
+.env
+.env.*

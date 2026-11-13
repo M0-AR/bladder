@@ -1,8 +1,9 @@
-import cv2
-import os
-from pathlib import Path
 import glob
 import json
+import os
+from pathlib import Path
+
+import cv2
 
 
 def load_annotations(json_path: Path) -> dict:

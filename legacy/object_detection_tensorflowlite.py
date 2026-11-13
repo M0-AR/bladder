@@ -1,4 +1,5 @@
 import os
+
 import cv2
 import numpy as np
 from tensorflow.lite.python.interpreter import Interpreter
@@ -14,7 +15,7 @@ def load_label_map(label_path):
     Returns:
     - List of labels.
     """
-    with open(label_path, 'r') as f:
+    with open(label_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
@@ -79,7 +80,7 @@ def draw_detections(frame, boxes, classes, scores, labels, imW, imH, threshold):
 
 def main():
     # Constants
-    MODEL_NAME = 'Sample_TFLite_model'
+    MODEL_NAME = 'models'
     GRAPH_NAME = 'detect.tflite'
     LABELMAP_NAME = 'labelmap.txt'
     VIDEO_NAME = 'C:/Users/md/Desktop/a.mp4'

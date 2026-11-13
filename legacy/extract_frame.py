@@ -1,8 +1,9 @@
-import os
-import cv2
-import json
-from pathlib import Path
 import glob
+import json
+import os
+from pathlib import Path
+
+import cv2
 
 
 def extract_frames(video_path: Path, annotations: dict, frame_rate: int = 1):

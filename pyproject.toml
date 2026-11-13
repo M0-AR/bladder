@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bladder-vision"
+version = "1.0.0"
+description = "Research-grade cystoscopy AI pipeline for bladder lesion detection, classification, evaluation, and 3D education."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mohamad Al-Ashmar", email = "55653276+M0-AR@users.noreply.github.com" }]
+keywords = [
+  "bladder-cancer",
+  "cystoscopy",
+  "medical-imaging",
+  "computer-vision",
+  "deep-learning",
+  "tensorflow-lite",
+  "opencv",
+  "nmibc",
+  "object-detection",
+  "image-classification",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Healthcare Industry",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+cv = ["opencv-python>=4.8", "Pillow>=10"]
+ml = ["tensorflow>=2.15", "matplotlib>=3.8"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://m0-ar.github.io/bladder/"
+Repository = "https://github.com/M0-AR/bladder"
+Issues = "https://github.com/M0-AR/bladder/issues"
+Changelog = "https://github.com/M0-AR/bladder/blob/master/CHANGELOG.md"
+
+[project.scripts]
+bladder-vision = "bladder_vision.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+exclude = ["legacy"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"

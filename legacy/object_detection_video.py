@@ -1,8 +1,7 @@
-import math
 
-from keras.models import load_model
 import cv2
 import numpy as np
+from keras.models import load_model
 
 # Load the model
 model = load_model('bladder_types.h5')

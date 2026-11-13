@@ -1,6 +1,6 @@
 import os
-import shutil
 import random
+import shutil
 
 # Paths
 src_image_dir = 'dataset-jpg/images/'

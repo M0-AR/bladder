@@ -32,7 +32,6 @@ if __name__ == "__main__":
     video_path = 'C:/Users/md/Desktop/a.mp4'
     print(f"Total frames in the video: {get_total_frames(video_path)}")
 
-import cv2
 import numpy as np
 
 

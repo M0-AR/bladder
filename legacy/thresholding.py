@@ -16,6 +16,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
+
 def display_image(img, title="Image"):
     if len(img.shape) == 3:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

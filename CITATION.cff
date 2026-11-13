@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software in research or education, please cite it using the metadata below."
+title: "Bladder Vision: an open cystoscopy AI pipeline and 3D learning environment"
+abstract: "A research-grade pipeline for cystoscopy frame extraction, annotation conversion, dataset splitting, lesion detection, frame classification, evaluation, and interactive education. Not a medical device."
+authors:
+  - family-names: Al-Ashmar
+    given-names: Mohamad
+    alias: M0-AR
+    affiliation: Independent research
+version: 1.0.0
+date-released: 2026-11-13
+license: MIT
+repository-code: "https://github.com/M0-AR/bladder"
+url: "https://m0-ar.github.io/bladder/"
+keywords:
+  - bladder cancer
+  - cystoscopy
+  - NMIBC
+  - medical imaging
+  - computer vision
+  - deep learning
+  - TensorFlow Lite
+  - OpenCV
+  - research software
+  - education
+preferred-citation:
+  type: software
+  title: "Bladder Vision"
+  authors:
+    - family-names: Al-Ashmar
+      given-names: Mohamad
+  version: 1.0.0
+  date-released: 2026-11-13
+  license: MIT
+  url: "https://github.com/M0-AR/bladder"

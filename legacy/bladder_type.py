@@ -1,10 +1,10 @@
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
-from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.layers import Conv2D, Dense, Flatten, MaxPooling2D
+from keras.models import Sequential
+from keras.optimizers import Adam
 from keras.preprocessing import image
+from keras.preprocessing.image import ImageDataGenerator
 
 # Define directories
 train_dir = "bladder_data/train"
